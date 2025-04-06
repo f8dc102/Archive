@@ -1,0 +1,138 @@
+{
+  "sourceLanguage" : "ko",
+  "strings" : {
+    "common.close" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "닫기"
+          }
+        }
+      }
+    },
+    "transit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "교통"
+          }
+        }
+      }
+    },
+    "transit.arriving_in" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d분 후 도착"
+          }
+        }
+      }
+    },
+    "transit.arriving_soon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "곧 도착"
+          }
+        }
+      }
+    },
+    "transit.citybus.map" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시내버스 지도"
+          }
+        }
+      }
+    },
+    "transit.citybus.map.busstop_count" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d 정거장 전"
+          }
+        }
+      }
+    },
+    "transit.citybus.map.fetching_arrival_data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "도착 정보 불러오는 중..."
+          }
+        }
+      }
+    },
+    "transit.citybus.map.no_active_bus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "운행 중인 차량이 없습니다"
+          }
+        }
+      }
+    },
+    "transit.citybus.map.no_approaching_bus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "도착 예정 버스 없음"
+          }
+        }
+      }
+    },
+    "transit.departing_in" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d분 후 출발"
+          }
+        }
+      }
+    },
+    "transit.departing_soon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "곧 출발"
+          }
+        }
+      }
+    },
+    "transit.left_for_arrival" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "도착까지 약 %d분 남음"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

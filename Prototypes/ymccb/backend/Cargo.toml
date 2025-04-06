@@ -1,0 +1,7 @@
+[workspace]
+members = ["shared", "data_collector", "api_server"]
+resolver = "3"
+
+[profile.dev]
+opt-level = 0
+debug = true

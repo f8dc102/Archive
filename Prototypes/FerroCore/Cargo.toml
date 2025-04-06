@@ -1,0 +1,25 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/auth",
+    "crates/comment",
+    "crates/feed",
+    "crates/follow",
+    "crates/graphql",
+    "crates/like",
+    "crates/media",
+    "crates/notification",
+    "crates/post",
+    "crates/shared",
+    "crates/user",
+    "services/auth-api",
+    "services/comment-api",
+    "services/feed-api",
+    "services/follow-api",
+    "services/like-api",
+    "services/media-api",
+    "services/notification-api",
+    "services/post-api",
+    "services/search-api",
+    "services/user-api",
+]

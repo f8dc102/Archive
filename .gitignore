@@ -1,0 +1,67 @@
+# Xcode
+DerivedData/
+build/
+*.xcworkspace
+*.xccheckout
+*.xcuserstate
+*.xcscmblueprint
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+xcuserdata/
+
+# SwiftPM
+/.build/
+/Packages/
+/.swiftpm/
+
+# SwiftUI Preview
+**/*.preview-thumbnails
+
+# Google Service
+GoogleService-Info.plist
+
+# .DS_Store
+.DS_Store
+
+# Temporary files
+*.swp
+*.orig
+*.rej
+*.lock
+*.log
+*.tmp
+
+# Environment files
+.env
+.env.*
+
+!.env.example
+
+.keep
+
+# Rust
+*.rs.bk
+Cargo.lock
+
+# Android Studio
+*.iml
+.gradle/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+local.properties
+.idea/
+.idea/caches
+.idea/libraries
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
+# Visual Studio Code
+.vscode/
+
+# Hidden Directories
+.hidden/

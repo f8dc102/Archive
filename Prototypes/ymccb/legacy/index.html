@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>실시간 시내버스 위치</title>
+
+  <link rel="stylesheet" href="common/css/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="logo">실시간 시내버스 위치</div>
+    <div class="menu">
+      <select id="busSelector" onchange="changeBusRoute()"></select>
+    </div>
+  </div>
+
+  <!-- Bus Schedule Floating Panel -->
+  <div id="busSchedulePanel" class="collapsed">
+    <h3> 🕒 시간표
+      <div id="scheduleToggleContainer" style="justify-content: space-between; align-items: left;">
+        <button id="toggleScheduleMode">🔄 <strong id="scheduleMode">평일</strong></button>
+      </div>
+      <button id="toggleBusSchedule">▼</button>
+    </h3>
+    <div id="busScheduleContent">
+      <table>
+        <thead>
+          <tr id="busScheduleHeader">
+            <th>시간</th>
+            <th>상행</th>
+            <th>하행</th>
+          </tr>
+        </thead>
+        <tbody id="busScheduleTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="busListPanel">
+    <h3>🚌 버스 목록</h3>
+    <ul id="busList"></ul>
+  </div>
+
+  <button id="findMeBtn">📍</button>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="common/js/api.js"></script>
+  <script src="common/js/schedule.js"></script>
+  <script src="common/js/status.js"></script>
+  <script src="common/js/ui.js"></script>
+  <script src="common/js/map.js"></script>
+</body>
+
+</html>

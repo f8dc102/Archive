@@ -1,0 +1,196 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #002366;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .logo {
+  font-weight: bold;
+}
+
+.navbar .menu {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar .menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.navbar .menu a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Map */
+#map {
+  height: calc(100vh - 60px);
+}
+
+/* Bus List */
+#busListPanel {
+  position: fixed;
+  bottom: 20px;
+  left: 10px;
+  width: 220px;
+  height: 120px; 
+  overflow-y: auto;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  z-index: 1000; /* 지도 위에 표시 */
+}
+
+#busList {
+  list-style: none;
+  padding: 0;
+}
+
+#busList li {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+#busList li:hover {
+  background: #f0f0f0;
+}
+
+/* Title & Toggle Button */
+#busListPanel h3 {
+  margin: 0;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#toggleBusList {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+}
+
+#toggleBusList:hover {
+  color: #007bff;
+}
+
+/* Floating Bus Schedule Panel (Bottom Right) */
+#busSchedulePanel {
+  position: fixed;
+  bottom: 180px; /* Bus List Panel(20px + 최대 120px) 위로 배치 */
+  left: 10px;
+  width: 220px;
+  max-height: 200px; /* 너무 길어지지 않도록 제한 */
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  z-index: 1100; /* Bus List Panel보다 위에 표시 */
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Collapsed State */
+#busSchedulePanel.collapsed {
+  max-height: 30px;
+  opacity: 0.8;
+  overflow: hidden;
+}
+
+/* Title & Toggle Button */
+#busSchedulePanel h3 {
+  margin: 0;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#toggleBusSchedule {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+}
+
+#toggleBusSchedule:hover {
+  color: #007bff;
+}
+
+/* Table Styling */
+#busSchedulePanel table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#busSchedulePanel th,
+#busSchedulePanel td {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: center;
+}
+
+#busSchedulePanel th {
+  background: #f4f4f4;
+}
+
+#busSchedule {
+  list-style: none;
+  padding: 0;
+}
+
+#busSchedule li {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+#busSchedule li:hover {
+  background: #f0f0f0;
+}
+
+/* Client Location */
+#findMeBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 10px;  /* 📍 Place it in the bottom-right corner */
+  background: white;
+  border: 2px solid #002366;
+  color: #002366;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: 0.2s ease-in-out;
+}
+
+#findMeBtn:hover {
+  background: #002366;
+  color: white;
+}

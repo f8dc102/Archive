@@ -1,0 +1,72 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Container */
+main {
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  main {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  main {
+    padding: 2rem;
+  }
+}
+
+/* Typography */
+h1 {
+  font-size: 1.5rem; /* Base size */
+}
+
+@media (min-width: 640px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar ul li {
+    margin-bottom: 0.5rem;
+  }
+}
