@@ -1,4 +1,132 @@
-# INSTRUCTIONS
+# Setting Up Development Environment on AWS EC2
+
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Launch Instance](#launch-instance)
+3. [Prevent Unexpected Charges](#prevent-unexpected-charges)
+
+## Introduction
+
+This document provides a step-by-step guide to setting up a development environment on AWS EC2. It includes instructions for launching an instance, configuring cloud-init, and preventing unexpected charges.
+
+## Launch Instance
+
+The setup includes installing essential packages, configuring the shell environment, and setting up auto-stop functionality to save costs.
+
+### cloud-init Configuration
+
+## Prevent Unexpected Charges
+
+If you are using a cloud service like AWS, GCP, or Azure, you may want to stop the instance when you are not using it to prevent unexpected charges.
+
+Automatically stopping the instance when there is no SSH connection for a certain period of time can help you save costs.
+
+### AutoStop Service
+
+This service stops the instance to prevent unexpected charges.
+
+The instance will be stopped if it is running without any ssh connection more than 10 minutes.
+
+#### Installation
+
+Just run the following commands to install the service.
+
+##### Create AutoStop Service
+
+```bash
+sudo bash -c 'cat > /etc/systemd/system/autostop.service <<EOF
+[Unit]
+Description=AutoStop
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/autostop
+
+[Install]
+WantedBy=multi-user.target
+EOF'
+```
+
+##### Create AutoStop Script
+
+```bash
+sudo bash -c 'cat > /usr/local/bin/autostop <<EOF
+#!/bin/bash
+
+LOGFILE=/var/log/autostop.log
+
+# Reset Counter
+counter=0
+
+# Print Start Message
+echo "\$(date): Starting Autostop Script." >>\$LOGFILE
+
+# Loop
+while true; do
+  # Check SSH Connection Established on Port 22
+  connections=\$(/usr/bin/ss -tnp | /bin/grep ":22" | /bin/grep ESTAB)
+
+  # If There is No Active Connection, Then
+  if [ -z "\$connections" ]; then
+    # Increment Counter
+    counter=\$((counter + 1))
+    echo "\$(date): No SSH Connection. Counter: \$counter" >>\$LOGFILE
+
+    # If The Counter Reaches 10 (10 minutes)
+    if [ \$counter -ge 10 ]; then
+      echo "\$(date): Counter Reached 10, Poweroff." >>\$LOGFILE
+      /usr/sbin/shutdown -h now
+      exit
+    fi
+  else
+    # Else, Reset Counter
+    counter=0
+    echo "\$(date): Active SSH Connection Found, Resetting Counter." >>\$LOGFILE
+  fi
+
+  # Wait a minute
+  /bin/sleep 60
+done
+EOF'
+```
+
+##### Change Permission and Enable Service
+
+Now, you need to change the permission of the script and enable the service.
+
+```bash
+sudo chmod +x /usr/local/bin/autostop
+sudo systemctl enable autostop.service
+sudo systemctl start autostop.service
+sudo systemctl status autostop.service
+```
+
+#### Check AutoStop Service Status
+
+After the first run, you can check the status of the service with the following command.
+
+```bash
+sudo systemctl status autostop.service
+```
+
+You can check the log file `/var/log/autostop.log` to see the status of the service.
+
+```bash
+cat /var/log/autostop.log
+```
+
+#### Uninstall Autostop Service
+
+If you want to uninstall the service, just run the following commands.
+
+```bash
+sudo systemctl stop autostop.service
+sudo systemctl disable autostop.service
+sudo rm /etc/systemd/system/autostop.service
+sudo rm /usr/local/bin/autostop.sh
+sudo systemctl daemon-reload
+```
 
 ## Setup Development Environment
 
@@ -12,30 +140,64 @@ package_upgrade: true
 packages:
   - git
   - zsh
-  - unzip
-  - gettext
-  - build-essential
-  - mosh
+  - make
   - cmake
-  - screen
   - tmux
+  - curl
 
-# default user settings
 system_info:
   default_user:
-    name: f8dc193
+    name: 22615d7
     shell: /bin/zsh
 
 runcmd:
-  # Install OhMyZsh
-  - chsh -s $(which zsh) f8dc193
-  - su - f8dc193 -c 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
-  # Install Powerlevel10k
-  - su - f8dc193 -c "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k && sed -i 's/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"powerlevel10k\/powerlevel10k\"/' ~/.zshrc"
-  # Install Zsh Syntax Highlighting
-  - su - f8dc193 -c "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && sed -i '/plugins=(git)/c\plugins=(git zsh-syntax-highlighting)' ~/.zshrc"
-  # Finally Reboot the System
-  - reboot
+  - |
+    #!/bin/bash
+    set -euo pipefail
+
+    USERNAME="22615d7"
+    USER_HOME=$(eval echo "~$USERNAME")
+    ZSHRC="$USER_HOME/.zshrc"
+    OHMYZSH="$USER_HOME/.oh-my-zsh"
+
+    echo "[*] Starting zsh environment setup for $USERNAME..."
+
+    # Oh My Zsh
+    if [ ! -d "$OHMYZSH" ]; then
+      echo "[*] Installing Oh My Zsh..."
+      su - "$USERNAME" -c 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || true'
+    else
+      echo "[*] Oh My Zsh already installed, skipping."
+    fi
+
+    # Powerlevel10k
+    THEME_DIR="$OHMYZSH/custom/themes/powerlevel10k"
+    if [ ! -d "$THEME_DIR" ]; then
+      echo "[*] Installing Powerlevel10k theme..."
+      su - "$USERNAME" -c "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git '$THEME_DIR'"
+    fi
+
+    if ! grep -q 'ZSH_THEME="powerlevel10k/powerlevel10k"' "$ZSHRC"; then
+      echo "[*] Setting Powerlevel10k as ZSH_THEME..."
+      su - "$USERNAME" -c "sed -i 's|^ZSH_THEME=.*|ZSH_THEME=\"powerlevel10k/powerlevel10k\"|' '$ZSHRC'"
+    fi
+
+    # zsh-syntax-highlighting
+    SYNTAX_PLUGIN_DIR="$OHMYZSH/custom/plugins/zsh-syntax-highlighting"
+    if [ ! -d "$SYNTAX_PLUGIN_DIR" ]; then
+      echo "[*] Installing zsh-syntax-highlighting plugin..."
+      su - "$USERNAME" -c "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git '$SYNTAX_PLUGIN_DIR'"
+    fi
+
+    if ! grep -q 'zsh-syntax-highlighting' "$ZSHRC"; then
+      echo "[*] Enabling zsh-syntax-highlighting plugin..."
+      su - "$USERNAME" -c "sed -i 's|plugins=(git)|plugins=(git zsh-syntax-highlighting)|' '$ZSHRC'"
+    fi
+
+    echo "[*] Fixing permissions..."
+    chown -R "$USERNAME:$USERNAME" "$USER_HOME"
+
+    echo "[✓] Zsh environment setup completed successfully."
 ```
 
 ### Add Auto-Stop Service
