@@ -1,6 +1,6 @@
 # Pre Data Structures
 
-Made with ❤️ by 2023245050 정재윤
+Made with ❤️
 
 ## Structures
 
